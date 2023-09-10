@@ -14,7 +14,6 @@ public class IntergalacticConverter {
 
     private final Map<String, String> intergalacticToRomanMap = new HashMap<>();
     private final Map<String, Double> metalsValueMap = new HashMap<>();
-    private final List<String> outputs = new ArrayList<>();
 
     public static void main(String[] args) {
         IntergalacticConverter converter = new IntergalacticConverter();
@@ -24,10 +23,6 @@ public class IntergalacticConverter {
             String line = scanner.nextLine().trim();
             if (line.isEmpty()) break;
             converter.processLine(line);
-        }
-
-        for (String output : converter.outputs) {
-            System.out.println(output);
         }
 
         scanner.close();
@@ -46,7 +41,7 @@ public class IntergalacticConverter {
 
             String roman = convertIntergalacticToRoman(intergalacticNumbers);
             if (roman == null) {
-                outputs.add("Error: Unable to convert " + String.join(" ", intergalacticNumbers) + " to Roman numerals.");
+                System.out.println("Error: Unable to convert " + String.join(" ", intergalacticNumbers) + " to Roman numerals.");
                 return;
             }
             int value = convertRomanToArabic(roman);
@@ -60,11 +55,11 @@ public class IntergalacticConverter {
             String[] intergalacticNumbers = query.replace("how much is ", "").split("\\s+");
             String roman = convertIntergalacticToRoman(intergalacticNumbers);
             if (roman == null) {
-                outputs.add("I have no idea what you are talking about");
+                System.out.println("I have no idea what you are talking about");
                 return;
             }
             int value = convertRomanToArabic(roman);
-            outputs.add(String.join(" ", intergalacticNumbers) + " is " + value);
+            System.out.println(String.join(" ", intergalacticNumbers) + " is " + value);
         } else if (query.startsWith("how many Credits is ")) {
             String[] parts = query.replace("how many Credits is ", "").split("\\s+");
             String metal = parts[parts.length - 1];
@@ -72,14 +67,14 @@ public class IntergalacticConverter {
             String roman = convertIntergalacticToRoman(intergalacticNumbers);
 
             if (roman == null || !metalsValueMap.containsKey(metal)) {
-                outputs.add("I have no idea what you are talking about");
+                System.out.println("I have no idea what you are talking about");
                 return;
             }
 
             int value = convertRomanToArabic(roman);
-            outputs.add(String.join(" ", intergalacticNumbers) + " " + metal + " is " + (int) (value * metalsValueMap.get(metal)) + " Credits");
+            System.out.println(String.join(" ", intergalacticNumbers) + " " + metal + " is " + (int) (value * metalsValueMap.get(metal)) + " Credits");
         } else {
-            outputs.add("I have no idea what you are talking about");
+            System.out.println("I have no idea what you are talking about");
         }
     }
 
